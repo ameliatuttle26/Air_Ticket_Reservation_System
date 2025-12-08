@@ -212,6 +212,22 @@ def register_staff():
         if airline_name not in airlines:
             flash("Selected airline does not exist. Please choose from the list.")
             return redirect(url_for("register_staff"))
+        
+        reg_code = form.get("reg_code")
+
+        with conn.cursor() as cur:
+            cur.execute("SELECT staff_reg_code FROM airline WHERE airline_name=%s", (airline_name,))
+            row = cur.fetchone()
+
+        if not row:
+            flash("Invalid airline selected.")
+            return redirect(url_for("register_staff"))
+
+        if row['staff_reg_code'] != reg_code:
+            flash("Invalid registration code.")
+            return redirect(url_for("register_staff"))
+
+
 
         conn = get_db_connection()
         try:
