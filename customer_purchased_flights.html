@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.dashboard-card {
+    background: rgba(255,255,255,0.75);
+    padding: 25px;
+    width: 85%;
+    margin: 20px auto;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+h2 { text-align: center; }
+
+.table-scroll { overflow-x: auto; }
+
+.styled-table { width: 100%; border-collapse: collapse; }
+
+.styled-table th, .styled-table td {
+    text-align: center;
+    padding: 10px;
+}
+
+.styled-table tr:nth-child(even) { background-color: #f8f8f8; }
+</style>
+
+<div class="dashboard-card">
+    <h2>Your Purchased Flights</h2>
+
+    <div class="table-scroll">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Flight #</th>
+                    <th>Airline</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in flights %}
+                <tr>
+                    <td>{{ f.flight_num }}</td>
+                    <td>{{ f.airline_name }}</td>
+                    <td>{{ f.departure_time }}</td>
+                    <td>{{ f.arrival_time }}</td>
+                    <td>{{ f.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

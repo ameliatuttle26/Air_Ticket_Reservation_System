@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Search Flights</h1>
+
+<div class="search-layout">
+
+    <!-- LEFT SIDE: FIXED SEARCH PANEL -->
+    <div class="search-panel card">
+
+        <h2>Search Filters</h2>
+
+        <form method="post" action="{{ url_for('public_search_page') }}">
+            <label>Origin Airport</label>
+            <input name="origin" placeholder="e.g. JFK">
+
+            <label>Destination Airport</label>
+            <input name="destination" placeholder="e.g. LAX">
+
+            <label>Date (YYYY-MM-DD)</label>
+            <input name="date">
+
+            <button type="submit">Search</button>
+        </form>
+
+    </div>
+
+    <!-- RIGHT SIDE: SCROLLABLE RESULTS -->
+    <div class="results-panel card">
+
+        <h2>Flight Results</h2>
+
+        {% if flights %}
+        <div class="results-scroll">
+            <table>
+                <tr>
+                    <th>Airline</th>
+                    <th>Flight #</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                </tr>
+
+                {% for f in flights %}
+                <tr>
+                    <td>{{ f.airline_name }}</td>
+                    <td>{{ f.flight_num }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.departure_time }}</td>
+                    <td>{{ f.status }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% else %}
+            <p class="subtext">No flights found.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
