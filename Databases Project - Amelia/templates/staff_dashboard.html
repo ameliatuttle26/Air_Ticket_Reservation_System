@@ -133,7 +133,7 @@ input, select {
 {% endif %}
 
 
-<!-- HEADER -->
+<!-- header -->
 <div class="dashboard-header">
     <h1>
         Welcome, {{ session['user_id'] }}
@@ -244,7 +244,7 @@ input, select {
 
         <hr>
 
-        <!-- ADD AIRPLANE -->
+        <!-- add airplane -->
         <h3>Add Airplane</h3>
         <form method="post" action="{{ url_for('staff_add_airplane') }}">
             <label>Airplane ID:</label>
@@ -254,7 +254,7 @@ input, select {
 
         <hr>
 
-        <!-- ADD AIRPORT -->
+        <!-- add airport -->
         <h3>Add Airport</h3>
         <form method="post" action="{{ url_for('staff_add_airport') }}">
             <label>Airport Name:</label>
@@ -266,7 +266,7 @@ input, select {
 
         <hr>
 
-        <!-- AUTHORIZE AGENT -->
+        <!-- authorize agent -->
         <h3>Authorize Booking Agent</h3>
         <form method="post" action="{{ url_for('staff_add_agent_auth') }}">
             <label>Agent Email:</label>
@@ -278,7 +278,7 @@ input, select {
 
 
 
-    <!-- 🟧 OPERATOR TOOLS -->
+    <!-- Operator tools -->
     {% if is_operator %}
     <div class="dashboard-card">
         <h2>Operator Tools</h2>

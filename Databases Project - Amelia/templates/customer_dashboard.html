@@ -102,7 +102,7 @@
     <h1>Welcome Back, {{ session['user_id'] }} ✈️</h1>
 </div>
 
-<!-- SEARCH FLIGHTS CARD -->
+<!-- search flight card -->
 <div class="dashboard-card">
     <h2>Search Flights</h2>
     <form method="post" action="{{ url_for('customer_search_flights') }}">
@@ -122,11 +122,11 @@
 
 <div class="dashboard-sections">
 
-    <!-- PURCHASED / UPCOMING FLIGHTS -->
+    <!-- puchased/upcoming flights -->
     <div class="dashboard-card">
         <h2>Your Purchased Flights</h2>
 
-        <!-- FILTER FORM -->
+        <!-- filter panel -->
         <form method="POST" action="{{ url_for('customer_dashboard') }}" style="margin-bottom: 22px;">
             <input type="hidden" name="form_type" value="flight_filter">
 
@@ -180,11 +180,11 @@
     </div>
 
 
-    <!-- SPENDING CARD -->
+    <!-- spending chart -->
     <div class="dashboard-card">
         <h2>Your Spending Overview</h2>
 
-        <!-- DEFAULT 12-MONTH TOTAL -->
+        <!-- default 12 month total -->
         <div class="spending-box">
             <p><strong>Total Last 12 Months:</strong> ${{ total_last_12 }}</p>
         </div>
@@ -197,7 +197,7 @@
 
         <hr style="margin-top: 25px; margin-bottom: 20px;">
 
-        <!-- CUSTOM SPENDING RANGE FORM -->
+        <!-- custome spending range form -->
         <h3>View Custom Spending Range</h3>
         <form method="POST">
             <input type="hidden" name="form_type" value="custom_spending">
@@ -230,7 +230,7 @@
 </div>
 
 
-<!-- CHART JS -->
+<!-- chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

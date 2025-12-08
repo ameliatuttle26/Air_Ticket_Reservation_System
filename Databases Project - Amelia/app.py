@@ -284,7 +284,7 @@ def login():
         try:
             with conn.cursor() as cur:
 
-                # ---------- CUSTOMER ----------
+                # customer
                 if user_type == "customer":
                     cur.execute("SELECT * FROM customer WHERE email=%s", (identifier,))
                     user = cur.fetchone()
@@ -294,7 +294,7 @@ def login():
                         session["user_id"] = user["email"]
                         return redirect(url_for("customer_dashboard"))
 
-                # ---------- AGENT ----------
+                # agent
                 elif user_type == "agent":
                     cur.execute("SELECT * FROM booking_agent WHERE email=%s", (identifier,))
                     user = cur.fetchone()
@@ -304,7 +304,7 @@ def login():
                         session["user_id"] = user["email"]
                         return redirect(url_for("agent_dashboard"))
 
-                # ---------- STAFF ----------
+                # staff
                 elif user_type == "staff":
                     cur.execute("""
                         SELECT username, password_hash, airline_name, role

@@ -9,7 +9,7 @@
     margin: 0 auto;
 }
 
-/* LEFT FILTER CARD */
+/* left filter card */
 .filter-card {
     flex: 1;
     background: rgba(255, 255, 255, 0.75);
@@ -36,7 +36,7 @@
 }
 
 
-/* BUTTONS */
+/* buttons */
 .btn {
     width: 100%;
     padding: 10px;
@@ -48,7 +48,7 @@
     cursor: pointer;
 }
 
-/* Purchase button specifically */
+/* purchase button */
 .purchase-btn {
     display: inline-block;
     padding: 6px 12px;
@@ -64,7 +64,7 @@
     background-color: #D96A3A;
 }
 
-/* RIGHT RESULTS CARD */
+/* right results card */
 .results-card {
     flex: 2;
     background: rgba(255, 255, 255, 0.75);
@@ -109,11 +109,11 @@
 
 <div class="page-layout">
 
-    <!-- LEFT FILTERS -->
+    <!-- filters on the left -->
     <div class="filter-card">
         <h2>Filter Flights</h2>
 
-        <!-- IMPORTANT: this should hit the /agent/search route -->
+    
         <form method="post" action="{{ url_for('agent_search') }}">
 
             <label>Origin Airport:</label>
@@ -130,7 +130,7 @@
     </div>
 
 
-    <!-- RIGHT TABLE -->
+    <!-- results table on the right -->
     <div class="results-card">
         <h2>Available Upcoming Flights</h2>
 
