@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+.dashboard-card {
+    background: rgba(255,255,255,0.75);
+    padding: 25px;
+    margin: 30px auto;
+    width: 85%;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.table-scroll { overflow-x: auto; }
+
+h2 { text-align: center; }
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+</style>
+
+<div class="dashboard-card">
+    <h2>Flights Taken by {{ customer_email }}</h2>
+
+    {% if flights %}
+    <div class="table-scroll">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Flight #</th>
+                    <th>Airline</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in flights %}
+                <tr>
+                    <td>{{ f.flight_num }}</td>
+                    <td>{{ f.airline_name }}</td>
+                    <td>{{ f.departure_airport }}</td>
+                    <td>{{ f.arrival_airport }}</td>
+                    <td>{{ f.departure_time }}</td>
+                    <td>{{ f.arrival_time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <p style="text-align:center;">This customer has no recorded flights.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
