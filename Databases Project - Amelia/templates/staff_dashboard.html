@@ -149,6 +149,26 @@ input, select {
     <div class="dashboard-card">
         <h2>Upcoming Flights (Next 30 Days)</h2>
 
+        <!-- flight filter -->
+        <form method="post" action="{{ url_for('staff_dashboard') }}" style="margin-bottom: 20px;">
+
+            <label>Start Date:</label>
+            <input type="date" name="start_date">
+
+            <label>End Date:</label>
+            <input type="date" name="end_date">
+
+            <label>Departure Airport:</label>
+            <input name="origin" placeholder="e.g. JFK">
+
+            <label>Arrival Airport:</label>
+            <input name="destination" placeholder="e.g. LAX">
+
+            <button class="btn" type="submit" name="form_type" value="flight_filter">
+        Apply Filters
+            </button>
+        </form>
+
         <div class="table-scroll">
             <table class="styled-table">
                 <thead>
@@ -163,23 +183,32 @@ input, select {
                     </tr>
                 </thead>
                 <tbody>
-                    {% for f in flights %}
-                    <tr>
-                        <td>{{ f.flight_num }}</td>
-                        <td>{{ f.departure_airport }}</td>
-                        <td>{{ f.arrival_airport }}</td>
-                        <td>{{ f.departure_time }}</td>
-                        <td>{{ f.arrival_time }}</td>
-                        <td>{{ f.status }}</td>
-                        <td>
-                            <a class="btn-view"
-                               href="{{ url_for('staff_passengers', airline=f.airline_name, flight_num=f.flight_num) }}">
-                                View
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                    {% if flights %}
+                        {% for f in flights %}
+                        <tr>
+                            <td>{{ f.flight_num }}</td>
+                            <td>{{ f.departure_airport }}</td>
+                            <td>{{ f.arrival_airport }}</td>
+                            <td>{{ f.departure_time }}</td>
+                            <td>{{ f.arrival_time }}</td>
+                            <td>{{ f.status }}</td>
+                            <td>
+                                <a class="btn-view"
+                                href="{{ url_for('staff_passengers', airline=f.airline_name, flight_num=f.flight_num) }}">
+                                 View
+                                            </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" style="padding:14px; text-align:center; font-style:italic; color:#666;">
+                                No flights found for the selected filters.
+                            </td>
+                        </tr>
+                    {% endif %}
                 </tbody>
+
             </table>
         </div>
     </div>

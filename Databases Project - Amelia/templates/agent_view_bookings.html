@@ -27,23 +27,21 @@
     font-weight: bold;
 }
 
-.filter-card input,
-.filter-card select {
-    width: 90%;      /* instead of 100% */
-    max-width: 260px;  /* forces it not to stretch too far */
+.filter-card input {
+    width: 90%;
+    max-width: 260px;
 }
-
 
 .btn {
     width: 100%;
     padding: 10px;
     margin-top: 15px;
     background-color: #E58A5C;
-    border: none;
     color: white;
     border-radius: 12px;
+    border: none;
+    cursor: pointer;
 }
-
 
 .results-card {
     flex: 2;
@@ -65,10 +63,9 @@
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 12px;              
-    overflow: hidden;           
+    border-radius: 12px;
+    overflow: hidden;
 }
-
 
 .styled-table th,
 .styled-table td {
@@ -87,13 +84,13 @@
 }
 </style>
 
-<h1 style="text-align:center; margin-bottom: 25px;">
+<h1 style="text-align:center; margin-bottom:25px;">
     View Booked Flights ✈️
 </h1>
 
 <div class="page-layout">
 
-    <!-- left filter panel -->
+    <!-- LEFT FILTERS -->
     <div class="filter-card">
         <h2>Filter Bookings</h2>
 
@@ -111,11 +108,14 @@
             <label>From Date:</label>
             <input type="date" name="start_date">
 
-            <button class="btn" type="submit">Apply Filters</button>
+            <label>To Date:</label>
+            <input type="date" name="end_date">
+
+            <button class="btn">Apply Filters</button>
         </form>
     </div>
 
-    <!-- right results panel -->
+    <!-- RIGHT RESULTS -->
     <div class="results-card">
         <h2>Your Booked Flights</h2>
 

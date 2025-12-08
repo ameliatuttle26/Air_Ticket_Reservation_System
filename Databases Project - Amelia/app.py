@@ -986,23 +986,32 @@ def agent_view_bookings():
             """
             params = [agent_email]
 
+            # Filters
             customer = request.form.get("customer_email")
             origin = request.form.get("origin")
             destination = request.form.get("destination")
             start = request.form.get("start_date")
+            end = request.form.get("end_date")
 
             if customer:
                 sql += " AND p.customer_email = %s"
                 params.append(customer)
+
             if origin:
                 sql += " AND f.departure_airport = %s"
                 params.append(origin)
+
             if destination:
                 sql += " AND f.arrival_airport = %s"
                 params.append(destination)
+
             if start:
                 sql += " AND DATE(f.departure_time) >= %s"
                 params.append(start)
+
+            if end:
+                sql += " AND DATE(f.departure_time) <= %s"
+                params.append(end)
 
             sql += " ORDER BY f.departure_time DESC"
 
@@ -1016,7 +1025,7 @@ def agent_view_bookings():
 
 # Staff features
 # Staff Dashboard
-@app.route("/staff")
+@app.route("/staff", methods=["GET", "POST"])
 @login_required("staff")
 def staff_dashboard():
     username = session["user_id"]
@@ -1027,21 +1036,49 @@ def staff_dashboard():
     flights = []
     stats = {}
 
+    # default range (next 30 days)
+    today = datetime.today().date()
+    default_start = today
+    default_end = today + timedelta(days=30)
+
+    # Check if filter was submitted
+    use_filter = request.method == "POST" and request.form.get("form_type") == "flight_filter"
+
+    if use_filter:
+        start = request.form.get("start_date") or default_start
+        end = request.form.get("end_date") or default_end
+        origin = request.form.get("origin")
+        destination = request.form.get("destination")
+    else:
+        start = default_start
+        end = default_end
+        origin = None
+        destination = None
+
     try:
         with conn.cursor() as cur:
-            start = datetime.today().date()
-            end = start + timedelta(days=30)
 
-            cur.execute("""
+            sql = """
                 SELECT *
                 FROM flight
                 WHERE airline_name = %s
                   AND DATE(departure_time) BETWEEN %s AND %s
-                ORDER BY departure_time
-            """, (airline_name, start, end))
+            """
+            params = [airline_name, start, end]
+
+            if origin:
+                sql += " AND departure_airport = %s"
+                params.append(origin)
+            if destination:
+                sql += " AND arrival_airport = %s"
+                params.append(destination)
+
+            sql += " ORDER BY departure_time"
+            cur.execute(sql, params)
             flights = cur.fetchall()
 
-            year_start = start - timedelta(days=365)
+            # analytics query unchanged
+            year_start = today - timedelta(days=365)
             cur.execute("""
                 SELECT DATE_FORMAT(p.purchase_date, '%%Y-%%m') AS month,
                        COUNT(*) AS num_tickets
@@ -1053,6 +1090,7 @@ def staff_dashboard():
                 ORDER BY month
             """, (airline_name, year_start))
             stats["tickets_per_month"] = cur.fetchall()
+
     finally:
         conn.close()
 
@@ -1068,6 +1106,7 @@ def staff_dashboard():
         is_admin=is_admin,
         is_operator=is_operator
     )
+
 
 
 # Passenger list for a flight
